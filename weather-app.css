@@ -1,0 +1,13 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(179, 197, 255);
+  color: rgb(24, 33, 63);
+  font-family: sans-serif;
+}
+
