@@ -4,10 +4,129 @@
   box-sizing: border-box;
 }
 
+:root {
+  --clr-bg: rgb(193, 192, 253);
+  --clr-bg1: rgb(176, 172, 251);
+  --clr-bg2: rgb(151, 156, 242);
+  --clr-main: rgb(24, 33, 63);
+  --clr-main-lighter: rgb(49, 66, 120);
+}
+
 body {
   margin: 0;
-  background-color: rgb(179, 197, 255);
-  color: rgb(24, 33, 63);
+  background-color: var(--clr-bg);
+  color: var(--clr-main);
   font-family: sans-serif;
+}
+
+.blurred { /* ******* */
+  filter: blur(3px);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-right: 2px solid var(--clr-main);
+}
+
+.weather-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: invert(11%) sepia(12%) saturate(3587%) hue-rotate(189deg) brightness(100%) contrast(94%);
+  /* filter generator: https://codepen.io/sosuke/pen/Pjoqqp */
+  /* color: #18213f; */
+}
+
+.weather-icon.large {
+  width: 80px;
+  height: 80px;
+}
+
+.header-current-temp {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.header-right {
+  display: grid;
+/*   align-items: center; */
+  justify-content: space-around;
+  width: 50%;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, auto);
+/*   margin: 0.5rem;
+  padding: 0.5rem;
+  border-right: 2px solid var(--clr-main); */
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.6rem;
+  color: var(--clr-main-lighter);
+}
+
+.value-sub-info {
+  font-weight: lighter;
+  font-size: 0.75rem;
+}
+
+.day-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 75px);
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.day-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--clr-main);
+  border-radius: 0.25rem;
+  padding: 0.25remm;
+}
+
+.day-card-day {
+  font-size: 0.75rem;
+  color: var(--clr-main-lighter);
+  margin-top: 0.5rem;
+}
+
+.hour-section {
+  width: 100%;
+  text-align: center;
+  border-spacing: 0;
+}
+
+.hour-row {
+  background-color: var(--clr-bg1);
+}
+
+.hour-row:nth-child(2n) {
+  background-color: var(--clr-bg2);
+}
+
+.hour-row > td {
+  padding: 0.25rem 0.5rem;
 }
 
