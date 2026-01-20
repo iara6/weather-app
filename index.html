@@ -378,8 +378,51 @@
 
   </table>
 
-  <template id="day-card-template"></template>
-  <template id="hour-row-template"></template>
+  <template id="day-card-template">
+    <div class="day-card">
+      <img data-icon class="weather-icon">
+      <div data-date class="day-card-day"></div>
+      <div><span data-temp></span><span>&deg;</span></div>
+    </div>
+  </template>
+
+  <template id="hour-row-template">
+     <tr class="hour-row">
+        <td>
+          <div class="info-group">
+            <div data-day class="label"></div>
+            <div data-time></div>
+          </div>
+        </td>
+        <td>
+          <img data-icon class="weather-icon">
+        </td>
+        <td>
+          <div class="info-group">
+            <div class="label">Temp</div>
+            <div><span data-temp></span><span>&deg;</span></div>
+          </div>
+        </td>
+        <td>
+          <div class="info-group">
+            <div class="label">Fl Temp</div>
+            <div><span data-fl-temp></span><span>&deg;</span></div>
+          </div>
+        </td>
+        <td>
+          <div class="info-group">
+            <div class="label">Wind</div>
+            <div><span data-wind></span><span class="value-sub-info">mph</span></div>
+          </div>
+        </td>
+        <td>          
+          <div class="info-group">
+            <div class="label">Precip</div>
+            <div><span data-precip></span><span class="value-sub-info">in</span></div>
+          </div>
+        </td>
+      </tr>
+  </template>
   <script type="module" src="weather-app.js"></script>
 </body>
 </html>
