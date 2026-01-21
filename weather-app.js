@@ -44,23 +44,26 @@ export function getWeather(lat, lon, timezone) {
     current: "temperature_2m,wind_speed_10m,weather_code,wind_direction_10m",
   })
 
-  fetch(`https://api.open-meteo.com/v1/forecast?${params}`).then(({ data }) => {
+  return fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+  .then (res => res.json())
+  .then(data => {
+    // return data
     return {
       current: parseCurrentWeather(data),
-    /*   daily: parseDailyWeather(data),
-      hourly: parseHourlyWeather(data), */
+      daily: parseDailyWeather(data),
+      hourly: parseHourlyWeather(data),
     }
   })
 }
 
 function parseCurrentWeather({ current, daily }) {
   const {
-    temperature: currentTemp,
-    windspeed: windSpeed,
-    weathercode: iconCode
+    temperature_2m: currentTemp,
+    wind_speed_10m: windSpeed,
+    weather_code: iconCode
   } = current
 
-    const {
+  const {
     temperature_2m_max: [maxTemp], 
     /* const maxTemp = daily.temperature_2m_max[0] */
     temperature_2m_min: [minTemp], 
@@ -81,7 +84,69 @@ function parseCurrentWeather({ current, daily }) {
   }
 }
 
-getWeather(10, 10, Intl.DateTimeFormat().resolvedOptions().timeZone).then(res => res.json())
+function parseDailyWeather({ daily }) {
+  return daily.time.map((time, index) => {
+    return {
+      timestamp: time * 1000,
+      iconCode: daily.weather_code[index],
+      maxTemp: Math.round(daily.temperature_2m_max[index]),
+    }
+  })
+}
+
+function parseHourlyWeather({ hourly, current }) {
+  return hourly.time.map((time, index) => {
+    return {
+      timestamp: time * 1000,
+      iconCode: hourly.weather_code[index],
+      temp: Math.round(hourly.temperature_2m[index]),
+      feelsLike: Math.round(hourly.apparent_temperature[index]),
+      windSpeed: Math.round(hourly.wind_speed_10m[index]),
+      precip: Math.round(hourly.precipitation[index] * 100) / 100,
+    }
+  }).filter(({ timestamp }) => timestamp >= current.time * 1000)
+}
+
+getWeather(59.97, 30.3, "Europe/Moscow"/* Intl.DateTimeFormat().resolvedOptions().timeZone */)
+.then(renderWeather)
+.catch(e => {
+  console.error(e);
+  alert('Error getting weather.')
+})
+
+function renderWeather({ current, daily, hourly}) {
+  renderCurrentWeather(current);
+ /*  renderDailyWeather(daily); */
+  /* renderHourlyWeather(hourly); */
+  document.body.classList.remove('blurred');
+}
+
+function setValue(selector, value, { parent = document} = {}) {
+  parent.querySelector(`[data-${selector}]`).textContent = value;
+}
+
+function getIconUrl(iconCode) {
+  return `icons/${iconCode}.svg`
+}
+
+const currentIcon = document.querySelector("[data-current-icon]");
+
+function renderCurrentWeather(current) {
+  currentIcon.src = getIconUrl(current.iconCode);
+  setValue("current-temp", current.currentTemp);
+  setValue("current-high", current.highTemp);
+  setValue("current-low", current.lowTemp);
+  setValue("current-fl-high", current.highFeelsLike);
+  setValue("current-fl-low", current.lowFeelsLike);
+  setValue("current-wind", current.windSpeed);
+  setValue("current-precip", current.precip);
+}
+
+/* .then(data => {
+  console.log(data)
+}) */
+
+/* getWeather(10, 10, Intl.DateTimeFormat().resolvedOptions().timeZone).then(res => res.json())
   .then(data => {
     console.log(data)
-})
+}) */
