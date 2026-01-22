@@ -1,38 +1,40 @@
-// https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&timezone=Europe%2FMoscow&timeformat=unixtime
-
-// https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&current=temperature_2m,wind_speed_10m,weather_code&timezone=Europe%2FMoscow&timeformat=unixtime
+// https://open-meteo.com/en/docs - Weather Forecast API
 
 // https://my-server.tld/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&current=temperature_2m,wind_speed_10m,weather_code,wind_direction_10m&timezone=Europe%2FMoscow&timeformat=unixtime
 
-/* export function getWeather(lat, lon, timezone) {
-  axios.get("https://api.open-meteo.com/v1/forecast")
-} */
+import { ICON_MAP } from "./iconMap.js"
 
-/* export function getWeather(lat, lon, timezone) {
-  fetch(
-    `https://api.open-meteo.com/v1/forecast` +
-    `?latitude=${lat}` +
-    `&longitude=${lon}` +
-    `&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum` +
-    `&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m` +
-    `&timezone=${encodeURIComponent(timezone)}` +
-    `&timeformat=unixtime`
+navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+
+function positionSuccess({ coords }) {
+  /* 59.97, 30.3, "Europe/Moscow" */
+  getWeather(
+    coords.latitude,
+    coords.longitude,
+    Intl.DateTimeFormat().resolvedOptions().timeZone
   )
-} */
-
-/* export function getWeather(lat, lon, timezone) {
-  const params = new URLSearchParams({
-    latitude: lat,
-    longitude: lon,
-    daily: "weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum",
-    hourly: "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
-    timezone: timezone,
-    timeformat: "unixtime",
+  .then(renderWeather)
+  .catch(e => {
+    console.error(e);
+    alert('Error getting weather.')
   })
-
-  fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
 }
- */
+
+function positionError() {
+  alert("Location access is required to show the weather. Please allow access and refresh the page.");
+
+  getWeather(
+    59.97,
+    30.3,
+    "Europe/Moscow"
+  )
+  .then(renderWeather)
+  .catch(e => {
+    console.error(e);
+    alert('Error getting weather.')
+  })
+}
+
 export function getWeather(lat, lon, timezone) {
   const params = new URLSearchParams({
     latitude: lat,
@@ -107,17 +109,10 @@ function parseHourlyWeather({ hourly, current }) {
   }).filter(({ timestamp }) => timestamp >= current.time * 1000)
 }
 
-getWeather(59.97, 30.3, "Europe/Moscow"/* Intl.DateTimeFormat().resolvedOptions().timeZone */)
-.then(renderWeather)
-.catch(e => {
-  console.error(e);
-  alert('Error getting weather.')
-})
-
 function renderWeather({ current, daily, hourly}) {
   renderCurrentWeather(current);
- /*  renderDailyWeather(daily); */
-  /* renderHourlyWeather(hourly); */
+  renderDailyWeather(daily);
+  renderHourlyWeather(hourly);
   document.body.classList.remove('blurred');
 }
 
@@ -126,7 +121,7 @@ function setValue(selector, value, { parent = document} = {}) {
 }
 
 function getIconUrl(iconCode) {
-  return `icons/${iconCode}.svg`
+  return `icons/${ICON_MAP.get(iconCode)}.svg`
 }
 
 const currentIcon = document.querySelector("[data-current-icon]");
@@ -142,6 +137,42 @@ function renderCurrentWeather(current) {
   setValue("current-precip", current.precip);
 }
 
+const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, { weekday: "short" }); 
+//undefined/"en"/"en-GB" - language, locale
+//"long" - weekday names format
+const dailySection = document.querySelector("[data-day-section]");
+const dayCardTemplate = document.getElementById("day-card-template");
+
+function renderDailyWeather(daily) {
+  dailySection.innerHTML = "";
+  daily.forEach(day => {
+    const element = dayCardTemplate.content.cloneNode(true);
+    setValue("temp", day.maxTemp, { parent: element});
+    setValue("date", DAY_FORMATTER.format(day.timestamp), { parent: element});
+    element.querySelector("[data-icon]").src = getIconUrl(day.iconCode);
+    dailySection.append(element);
+  });
+}
+
+const HOUR_FORMATTER = new Intl.DateTimeFormat("en", { hour: "numeric", minute: 'numeric' }); // hourCycle: 'h23'
+const hourlySection = document.querySelector("[data-hour-section]");
+const hourRowTemplate = document.getElementById("hour-row-template");
+
+function renderHourlyWeather(hourly) {
+  hourlySection.innerHTML = "";
+  hourly.forEach(hour => {
+    const element = hourRowTemplate.content.cloneNode(true);
+    setValue("temp", hour.temp, { parent: element});
+    setValue("fl-temp", hour.feelsLike, { parent: element});
+    setValue("wind", hour.windSpeed, { parent: element});
+    setValue("precip", hour.precip, { parent: element});
+    setValue("day", DAY_FORMATTER.format(hour.timestamp), { parent: element});
+    setValue("time", HOUR_FORMATTER.format(hour.timestamp), { parent: element});
+    element.querySelector("[data-icon]").src = getIconUrl(hour.iconCode);
+    hourlySection.append(element);
+  });
+}
+
 /* .then(data => {
   console.log(data)
 }) */
@@ -150,3 +181,6 @@ function renderCurrentWeather(current) {
   .then(data => {
     console.log(data)
 }) */
+
+/* Phosphor */
+/* https://iconstack.io/ */
