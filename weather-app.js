@@ -4,14 +4,29 @@
 
 import { ICON_MAP } from "./iconMap.js"
 
-navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+const currentTime = document.querySelector('.current-time');
+const hours = new Date().getHours();
+const minutes = new Date().getMinutes();
+
+/* currentTime.textContent = `${hours}:${minutes}`; */
+/* currentTime.textContent = new Date().toLocaleTimeString(); */
+currentTime.textContent = new Date().toLocaleTimeString([], {
+  hour: '2-digit',
+  minute: '2-digit'
+});
+/* navigator.geolocation.getCurrentPosition(positionSuccess, positionError); */
+positionSuccess(); /* del + return blurred */
 
 function positionSuccess({ coords }) {
-  /* 59.97, 30.3, "Europe/Moscow" */
-  getWeather(
+ /*  getWeather(
     coords.latitude,
     coords.longitude,
     Intl.DateTimeFormat().resolvedOptions().timeZone
+  ) */
+  getWeather(
+    59.97,
+    30.3,
+    "Europe/Moscow"
   )
   .then(renderWeather)
   .catch(e => {

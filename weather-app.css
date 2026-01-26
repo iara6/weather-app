@@ -19,12 +19,29 @@ body {
   font-family: sans-serif;
 }
 
-.blurred { /* ******* */
+/* .blurred {
   filter: blur(3px);
   overflow: hidden;
-}
+} */
 
 .header {
+  margin-inline: auto;
+  /* border: 1px solid red; */
+  border-radius: 6px;
+  max-width: 50rem;
+  background-color: white;
+  box-shadow: 0 0 4px 4px rgb(0, 0, 0, 0.2);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  border-bottom:1px solid gray;
+  padding: 0.5rem;
+  text-transform: uppercase;
+}
+
+.header-inner-container {
   display: flex;
   align-items: center;
 }
