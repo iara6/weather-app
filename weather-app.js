@@ -8,26 +8,25 @@ const currentTime = document.querySelector('.current-time');
 const hours = new Date().getHours();
 const minutes = new Date().getMinutes();
 
-/* currentTime.textContent = `${hours}:${minutes}`; */
-/* currentTime.textContent = new Date().toLocaleTimeString(); */
 currentTime.textContent = new Date().toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit'
 });
-/* navigator.geolocation.getCurrentPosition(positionSuccess, positionError); */
-positionSuccess(); /* del + return blurred */
+
+navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+/* positionSuccess(); */ /* del + return blurred */
 
 function positionSuccess({ coords }) {
- /*  getWeather(
+  getWeather(
     coords.latitude,
     coords.longitude,
     Intl.DateTimeFormat().resolvedOptions().timeZone
-  ) */
-  getWeather(
+  )
+/*   getWeather(
     59.97,
     30.3,
     "Europe/Moscow"
-  )
+  ) */
   .then(renderWeather)
   .catch(e => {
     console.error(e);
@@ -152,9 +151,9 @@ function renderCurrentWeather(current) {
   setValue("current-precip", current.precip);
 }
 
-const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, { weekday: "short" }); 
+const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, { weekday: "long" }); 
 //undefined/"en"/"en-GB" - language, locale
-//"long" - weekday names format
+//"long", "short" - weekday names format
 const dailySection = document.querySelector("[data-day-section]");
 const dayCardTemplate = document.getElementById("day-card-template");
 
