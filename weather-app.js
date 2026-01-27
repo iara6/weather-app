@@ -1,3 +1,6 @@
+import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.module.mjs';
+/* https://confetti.js.org/ */
+
 // https://open-meteo.com/en/docs - Weather Forecast API
 
 // https://my-server.tld/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&current=temperature_2m,wind_speed_10m,weather_code,wind_direction_10m&timezone=Europe%2FMoscow&timeformat=unixtime
@@ -186,6 +189,72 @@ function renderHourlyWeather(hourly) {
     hourlySection.append(element);
   });
 }
+
+/* SNOW */
+
+function startSnow() {
+  const duration = 60 * 1000,
+  animationEnd = Date.now() + duration;
+  
+  let skew = 1;
+  
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  
+  (function frame() {
+    const timeLeft = animationEnd - Date.now(),
+      ticks = Math.max(200, 500 * (timeLeft / duration));
+  
+    skew = Math.max(0.8, skew - 0.001);
+  
+    confetti({
+      particleCount: 1,
+      startVelocity: 0,
+      ticks: ticks,
+      origin: {
+        x: Math.random(),
+        // since particles fall down, skew start toward the top
+        y: Math.random() * skew - 0.2,
+      },
+      colors: ["#ffffff"],
+      shapes: ["circle"],
+      gravity: randomInRange(0.4, 0.6),
+      scalar: randomInRange(0.4, 0.7),
+      drift: randomInRange(-0.4, 0.4),
+    });
+  
+    if (timeLeft > 0) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
+/* DYNAMIC BACKGROUND IMAGE */
+
+const seasonMonths = {
+  0: "winter",
+  1: "winter",
+  2: "spring",
+  3: "spring",
+  4: "spring",
+  5: "summer",
+  6: "summer",
+  7: "summer",
+  8: "autumn",
+  9: "autumn",
+  10: "autumn",
+  11: "winter"
+}
+
+const month = new Date().getMonth();
+const season = seasonMonths[month];
+
+if (season === "winter") startSnow();
+
+document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
+
+
 
 /* .then(data => {
   console.log(data)

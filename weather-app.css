@@ -10,21 +10,18 @@
   --clr-bg2: rgb(151, 156, 242);
   --clr-main: rgb(24, 33, 63);
   --clr-main-lighter: rgb(49, 66, 120);
-  --box-shadow: 0 0 4px 4px rgb(0, 0, 0, 0.2);
+  --clr-border: rgb(142, 141, 141, 0.5);
+  --box-shadow: 0 0 4px 3px rgb(0, 0, 0, 0.15);
   --max-width: 52rem;
 }
 
 body {
-  /* margin: 0; */
   margin: 1rem;
   background-color: var(--clr-bg);
   color: var(--clr-main);
   font-family: sans-serif;
 
-  /* height: 100vh; */
-  /* display: grid;
-  place-items: center; */
-  background-image: url('bg/winter.jpg');
+  background-image: linear-gradient(167deg, #22d3ee, #8b5cf6);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -37,11 +34,10 @@ body {
 }
 
 .header {
-  /* border: 1px solid red; */
   border-radius: 6px;
   margin-inline: auto;
   max-width: var(--max-width);
-  background-color: white;
+  background-color: rgb(255, 255, 255, 0.8);
   box-shadow: var(--box-shadow);
 }
 
@@ -62,10 +58,7 @@ body {
 
 .header-left {
   width: 50%;
-  /* margin: 0.5rem; */
-  padding: 1rem;
-  /* border: 1px solid red; */
-  /* border-right: 1px solid var(--clr-main); */
+  padding: 1.5rem;
 }
 
 .header-left-temp,
@@ -157,12 +150,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid var(--clr-main);
+  border: 1px solid var(--clr-border);
   border-radius: 0.25rem;
   padding: 0.8rem 0.4rem;
   font-size: 1.2rem;
 
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
 }
@@ -190,13 +183,9 @@ body {
   border: 2px solid red;
 } */
 .hour-row {
-  /* background-color: var(--clr-bg1); */
   background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-}
-.hour-row td {
-  border-bottom: 1px solid rgb(142, 141, 141);
 }
 
 .hour-row:nth-child(2n) {
@@ -207,5 +196,6 @@ body {
 
 .hour-row > td {
   padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid var(--clr-border);
 }
 
