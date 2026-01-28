@@ -7,19 +7,62 @@ import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/co
 
 import { ICON_MAP } from "./iconMap.js"
 
-const currentTime = document.querySelector('.current-time');
-const hours = new Date().getHours();
-const minutes = new Date().getMinutes();
+/* HEADER LOCATION */
 
-currentTime.textContent = new Date().toLocaleTimeString([], {
-  hour: '2-digit',
-  minute: '2-digit'
-});
+async function reverseGeocode(lat, lon) {
+  const lang = "en"; // navigator.language || "en";
+
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}`,
+    {
+      headers: {
+        "User-Agent": "your-app-name"
+      }
+    }
+  );
+
+  const data = await res.json();
+
+  if (!data.address) {
+    return "Unknown location";
+  }
+
+  const city =
+    data.address.city ||
+    data.address.town ||
+    data.address.village ||
+    data.address.hamlet ||
+    data.address.county ||
+    "Unknown city";
+
+  const country = data.address.country || "Unknown country";
+
+  return `${city}, ${country}`;
+}
+
+const location = document.querySelector('.location');
+
+async function updateLocation(lat, lon) { 
+  try {
+    const result = await reverseGeocode(lat, lon);
+    location.textContent = result; 
+  } catch (err) {
+    console.error(err); 
+  }
+}
+
+/* updateLocation(); */
+
+/* reverseGeocode(59.97, 30.3).then(console.log); */
+/* (37.44, -122.14) */
+
 
 navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
 /* positionSuccess(); */ /* del + return blurred */
 
 function positionSuccess({ coords }) {
+  updateLocation(coords.latitude, coords.longitude);
+
   getWeather(
     coords.latitude,
     coords.longitude,
@@ -39,6 +82,8 @@ function positionSuccess({ coords }) {
 
 function positionError() {
   alert("Location access is required to show the weather. Please allow access and refresh the page.");
+
+  updateLocation(59.97, 30.3);
 
   getWeather(
     59.97,
@@ -73,6 +118,19 @@ export function getWeather(lat, lon, timezone) {
       hourly: parseHourlyWeather(data),
     }
   })
+/*  return fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+  .then(res => res.json())
+  .then(data => {
+    console.log("Current units:", data.current_units);
+    console.log("Hourly units:", data.hourly_units);
+    console.log("Daily units:", data.daily_units);
+
+    return {
+      current: parseCurrentWeather(data),
+      daily: parseDailyWeather(data),
+      hourly: parseHourlyWeather(data),
+    }
+  }) */
 }
 
 function parseCurrentWeather({ current, daily }) {
@@ -190,10 +248,19 @@ function renderHourlyWeather(hourly) {
   });
 }
 
+/* HEADER TIME */
+
+const currentTime = document.querySelector('.current-time');
+
+currentTime.textContent = new Date().toLocaleTimeString([], {
+  hour: '2-digit',
+  minute: '2-digit'
+});
+
 /* SNOW */
 
 function startSnow() {
-  const duration = 60 * 1000,
+  const duration = 45 * 1000,
   animationEnd = Date.now() + duration;
   
   let skew = 1;
@@ -204,7 +271,7 @@ function startSnow() {
   
   (function frame() {
     const timeLeft = animationEnd - Date.now(),
-      ticks = Math.max(200, 500 * (timeLeft / duration));
+      ticks = Math.max(100, 400 * (timeLeft / duration));
   
     skew = Math.max(0.8, skew - 0.001);
   
@@ -253,6 +320,8 @@ const season = seasonMonths[month];
 if (season === "winter") startSnow();
 
 document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
+
+
 
 
 
