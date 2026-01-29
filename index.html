@@ -6,9 +6,22 @@
   <link rel="stylesheet" href="weather-app.css">
   <!-- FAVICON-->
   <link href="icons/favicon.ico" rel="icon" type="image/x-icon">
+  <!-- FONT AWESOME -->
+<!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"> -->
   <title>Weather App</title>
 </head>
 <body class="blurred">
+  <nav>
+    <a href="index.html">
+      <img src="icons/home.svg">
+    </a>
+    <a href="world.html">
+      <img src="icons/world.svg">
+    </a>
+    <a href="">
+      <img src="icons/search.svg">
+    </a>
+  </nav>
   <header class="header">
     <div class="header-top">
       <span>current weather</span>
@@ -43,7 +56,7 @@
         <div class="info-group">
           <div class="label">Wind</div>
           <div>
-            <span data-current-wind>9</span><span class="value-sub-info">mph</span>
+            <span data-current-wind>9</span><span class="value-sub-info">km/h</span>
           </div>
         </div>
         <div class="info-group">
@@ -61,7 +74,7 @@
         <div class="info-group">
           <div class="label">Precip</div>
           <div>
-            <span data-current-precip>0.1</span><span class="value-sub-info">in</span>
+            <span data-current-precip>0.1</span><span class="value-sub-info">mm</span>
           </div>
         </div>
       </div>
@@ -133,13 +146,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -168,13 +181,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -203,13 +216,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -238,13 +251,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -273,13 +286,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -308,13 +321,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -343,13 +356,13 @@
         <td>
           <div class="info-group">
             <div class="label">Wind</div>
-            <div>6<span class="value-sub-info">mph</span></div>
+            <div>6<span class="value-sub-info">km/h</span></div>
           </div>
         </td>
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -384,7 +397,7 @@
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div>0<span class="value-sub-info">in</span></div>
+            <div>0<span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>
@@ -432,7 +445,7 @@
         <td>          
           <div class="info-group">
             <div class="label">Precip</div>
-            <div><span data-precip></span><span class="value-sub-info">in</span></div>
+            <div><span data-precip></span><span class="value-sub-info">mm</span></div>
           </div>
         </td>
       </tr>

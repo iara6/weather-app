@@ -45,7 +45,9 @@ const location = document.querySelector('.location');
 async function updateLocation(lat, lon) { 
   try {
     const result = await reverseGeocode(lat, lon);
-    location.textContent = result; 
+    if (document.querySelector('.location')) {
+      location.textContent = result; 
+    }
   } catch (err) {
     console.error(err); 
   }
@@ -58,7 +60,6 @@ async function updateLocation(lat, lon) {
 
 
 navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
-/* positionSuccess(); */ /* del + return blurred */
 
 function positionSuccess({ coords }) {
   updateLocation(coords.latitude, coords.longitude);
@@ -184,15 +185,30 @@ function parseHourlyWeather({ hourly, current }) {
   }).filter(({ timestamp }) => timestamp >= current.time * 1000)
 }
 
-function renderWeather({ current, daily, hourly}) {
-  renderCurrentWeather(current);
+function renderWeather({ current, daily, hourly }) {
+ /*  renderCurrentWeather(current);
   renderDailyWeather(daily);
-  renderHourlyWeather(hourly);
+  renderHourlyWeather(hourly); */
+  if (document.querySelector("[data-current-icon]")) {
+    renderCurrentWeather(current);
+  }
+
+  if (dailySection) {
+    renderDailyWeather(daily);
+  }
+
+  if (hourlySection) {
+    renderHourlyWeather(hourly);
+  }
+
   document.body.classList.remove('blurred');
 }
 
 function setValue(selector, value, { parent = document} = {}) {
-  parent.querySelector(`[data-${selector}]`).textContent = value;
+  if (parent.querySelector(`[data-${selector}]`)) {
+
+    parent.querySelector(`[data-${selector}]`).textContent = value;
+  }
 }
 
 function getIconUrl(iconCode) {
@@ -252,10 +268,13 @@ function renderHourlyWeather(hourly) {
 
 const currentTime = document.querySelector('.current-time');
 
-currentTime.textContent = new Date().toLocaleTimeString([], {
-  hour: '2-digit',
-  minute: '2-digit'
-});
+if (document.querySelector('.current-time')) {
+  currentTime.textContent = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+}
 
 /* SNOW */
 
