@@ -1,0 +1,78 @@
+.world-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.2rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.city-div {
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0;
+  border-radius: 6px;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.weather-icon.city-large {
+  width: 100px;
+  height: 100px;
+}
+
+.city-current-temp {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.city-location {
+  display: flex;
+  align-items: end;
+}
+
+.city-country-location {
+  font-size: 1.2rem;
+  margin-left: 5px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+#new-york {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/new-york.jpg');
+}
+#new-york:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2)), url('bg/new-york.jpg');
+  color: rgb(255, 255, 255); 
+  /* filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%); */
+}
+#buenos-aires {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/buenos-aires.jpg');
+}
+#london {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/london.jpg');
+}
+#rome {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/rome.jpg');
+}
+#warsaw {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/warsaw.jpg');
+}
+#berlin {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/berlin.jpg');
+}
+#moscow {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/moscow.jpg');
+}
+#tokyo {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/tokyo.jpg');
+}
+#beijing {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/beijing.jpg');
+}
+#sydney {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/sydney.jpg');
+}
