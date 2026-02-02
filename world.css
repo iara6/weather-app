@@ -17,6 +17,37 @@
 
   background-size: cover;
   background-position: center;
+  /* ******* */
+  position: relative;
+  overflow: hidden;
+}
+
+.city-div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.65);
+  transition: opacity 300ms ease;
+}
+
+.city-div:hover::before {
+  opacity: 0;
+}
+
+.city-div:hover {
+  color: #fff;
+  text-shadow: 0 2px 3px var(--clr-main);
+}
+
+.city-div:hover .city-large,
+.city-div:hover .city-location-icon {
+  filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%) drop-shadow(0 2px 3px rgb(23, 36, 77, 0.7));
+}
+
+.city-temp,
+.city-location { 
+  position: relative;
+  z-index: 5;
 }
 
 .weather-icon.city-large {
@@ -42,37 +73,35 @@
 }
 
 #new-york {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/new-york.jpg');
+ /*  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/new-york.jpg'); */
+ background-image: url('bg/new-york.jpg');
 }
-#new-york:hover {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.2)), url('bg/new-york.jpg');
-  color: rgb(255, 255, 255); 
-  /* filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%); */
-}
+/* filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%); */
+
 #buenos-aires {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/buenos-aires.jpg');
+  background-image: url('bg/buenos-aires.jpg');
 }
 #london {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/london.jpg');
+  background-image: url('bg/london.jpg');
 }
 #rome {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/rome.jpg');
+  background-image: url('bg/rome.jpg');
 }
 #warsaw {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/warsaw.jpg');
+  background-image: url('bg/warsaw.jpg');
 }
 #berlin {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/berlin.jpg');
+  background-image: url('bg/berlin.jpg');
 }
 #moscow {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/moscow.jpg');
+  background-image: url('bg/moscow.jpg');
 }
 #tokyo {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/tokyo.jpg');
+  background-image: url('bg/tokyo.jpg');
 }
 #beijing {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/beijing.jpg');
+  background-image: url('bg/beijing.jpg');
 }
 #sydney {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/sydney.jpg');
+  background-image: url('bg/sydney.jpg');
 }
