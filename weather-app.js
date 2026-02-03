@@ -58,8 +58,11 @@ async function updateLocation(lat, lon) {
 /* reverseGeocode(59.97, 30.3).then(console.log); */
 /* (37.44, -122.14) */
 
+const useGeolocation = document.querySelector("[data-use-geolocation]");
 
-navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+if (useGeolocation) {
+  navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+}
 
 function positionSuccess({ coords }) {
   updateLocation(coords.latitude, coords.longitude);
@@ -204,9 +207,8 @@ function renderWeather({ current, daily, hourly }) {
   document.body.classList.remove('blurred');
 }
 
-function setValue(selector, value, { parent = document} = {}) {
+function setValue(selector, value, {parent = document} = {}) {
   if (parent.querySelector(`[data-${selector}]`)) {
-
     parent.querySelector(`[data-${selector}]`).textContent = value;
   }
 }
@@ -275,6 +277,45 @@ if (document.querySelector('.current-time')) {
   });
 
 }
+
+/* WORLD CAPITALS WEATHER */
+
+function getCityWeather(lat, lon, timezone, city) {
+   getWeather(
+    lat,
+    lon,
+    timezone
+  )
+  
+  .then(({current}) => renderCityWeather(current, city))
+  .catch(console.error);
+/*   .catch(e => {
+    console.error(e);
+    alert('Error getting weather.')
+  }) */
+}
+
+/* data-current-city-icon */
+
+function renderCityWeather(current, city) {
+  const cityIcon = city.querySelector("[data-current-city-icon]");
+  const cityTemp = city.querySelector("[data-current-city-temp]");
+
+  if (!cityIcon || !cityTemp) return;
+
+  cityIcon.src = getIconUrl(current.iconCode);
+  cityTemp.textContent = current.currentTemp;
+
+  document.body.classList.remove('blurred');
+}
+
+getCityWeather(
+  40.73,
+  -74.01,
+  "America/New_York",
+  document.getElementById("new-york")
+);
+
 
 /* SNOW */
 
