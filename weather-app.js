@@ -280,6 +280,69 @@ if (document.querySelector('.current-time')) {
 
 /* WORLD CAPITALS WEATHER */
 
+const cities = [{
+    id: "new-york",
+    lat: 40.73,
+    lon: -74.01,
+    tz: "America/New_York"
+  },
+  {
+    id: "buenos-aires",
+    lat: -34.60,
+    lon: -58.38,
+    tz: "America/Argentina/Buenos_Aires"
+  },
+  {
+    id: "london",
+    lat: 51.30,
+    lon: -0.08,
+    tz: "Europe/London"
+  },
+  {
+    id: "rome",
+    lat: 41.54,
+    lon: 12.29,
+    tz: "Europe/Rome"
+  },
+  {
+    id: "warsaw",
+    lat: 52.14,
+    lon: 21.00,
+    tz: "Europe/Warsaw"
+  },  
+  {
+    id: "berlin",
+    lat: 52.31,
+    lon: 13.23,
+    tz: "Europe/Berlin"
+  },
+  {
+    id: "moscow",
+    lat: 55.45,
+    lon: 37.37,
+    tz: "Europe/Moscow"
+  },
+  {
+    id: "tokyo",
+    lat: 35.41,
+    lon: 139.42,
+    tz: "Asia/Tokyo"
+  },
+  {
+    id: "beijing",
+    lat: 39.55,
+    lon: 116.23,
+    tz: "Asia/Shanghai"
+  },
+   {
+    id: "sydney",
+    lat: -33.52,
+    lon: 151.12,
+    tz: "Australia/Sydney"
+  }
+];
+
+
 function getCityWeather(lat, lon, timezone, city) {
    getWeather(
     lat,
@@ -295,8 +358,6 @@ function getCityWeather(lat, lon, timezone, city) {
   }) */
 }
 
-/* data-current-city-icon */
-
 function renderCityWeather(current, city) {
   const cityIcon = city.querySelector("[data-current-city-icon]");
   const cityTemp = city.querySelector("[data-current-city-temp]");
@@ -309,12 +370,21 @@ function renderCityWeather(current, city) {
   document.body.classList.remove('blurred');
 }
 
-getCityWeather(
+cities.forEach(city => {
+  getCityWeather(
+    city.lat,
+    city.lon,
+    city.tz,
+    document.getElementById(city.id)
+  );
+});
+
+/* getCityWeather(
   40.73,
   -74.01,
   "America/New_York",
   document.getElementById("new-york")
-);
+); */
 
 
 /* SNOW */
