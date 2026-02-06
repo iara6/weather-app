@@ -5,6 +5,9 @@
 }
 
 :root {
+  --nav-bg: rgb(255, 255, 255, 0.8);
+  --svg-icon-clr: invert(11%) sepia(12%) saturate(3587%) hue-rotate(189deg) brightness(100%) contrast(94%);
+  --day-card-bg: rgba(255, 255, 255, 0.5);
   --clr-bg: rgb(193, 192, 253);
   --clr-bg1: rgb(176, 172, 251);
   --clr-bg2: rgb(151, 156, 242);
@@ -13,6 +16,18 @@
   --clr-border: rgb(142, 141, 141, 0.5);
   --box-shadow: 0 0 4px 3px rgb(0, 0, 0, 0.15);
   --max-width: 52rem;
+}
+
+.dark-mode {
+  --nav-bg: rgba(75, 53, 77, 0.8);
+  --svg-icon-clr: invert(82%) sepia(88%) saturate(1028%) hue-rotate(178deg) brightness(102%) contrast(98%);
+  --day-card-bg: rgba(75, 53, 77, 0.6);
+  --clr-bg: rgb(117, 117, 134);
+  --clr-bg1: rgb(110, 107, 161);
+  --clr-bg2: rgb(112, 116, 181);
+  --clr-main: #d6dffd;
+  --clr-main-lighter: rgb(136, 162, 248);
+  --clr-border: rgb(142, 141, 141, 0.5);
 }
 
 body {
@@ -46,7 +61,7 @@ nav {
 
 nav a {
   text-decoration: none;
-  background-color: rgb(255, 255, 255, 0.8);
+  background-color: var(--nav-bg);
   padding: 8px 10px 10px;
   border-radius: 50%;
   display: flex;
@@ -69,7 +84,7 @@ nav img {
   border-radius: 6px;
   margin-inline: auto;
   max-width: var(--max-width);
-  background-color: rgb(255, 255, 255, 0.8);
+  background-color: var(--nav-bg);
   box-shadow: var(--box-shadow);
 }
 
@@ -124,7 +139,7 @@ nav img {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  filter: invert(11%) sepia(12%) saturate(3587%) hue-rotate(189deg) brightness(100%) contrast(94%);
+  filter: var(--svg-icon-clr);
   /* filter generator: https://codepen.io/sosuke/pen/Pjoqqp */
   /* color: #18213f; */
 }
@@ -190,7 +205,7 @@ nav img {
   width: 110px;
   font-size: 1.2rem;
 
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--day-card-bg);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
 }
@@ -234,3 +249,6 @@ nav img {
   border-bottom: 1px solid var(--clr-border);
 }
 
+.light-dark-mode-btn .lightDark {
+
+}

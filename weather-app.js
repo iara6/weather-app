@@ -53,11 +53,6 @@ async function updateLocation(lat, lon) {
   }
 }
 
-/* updateLocation(); */
-
-/* reverseGeocode(59.97, 30.3).then(console.log); */
-/* (37.44, -122.14) */
-
 const useGeolocation = document.querySelector("[data-use-geolocation]");
 
 if (useGeolocation) {
@@ -122,19 +117,6 @@ export function getWeather(lat, lon, timezone) {
       hourly: parseHourlyWeather(data),
     }
   })
-/*  return fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
-  .then(res => res.json())
-  .then(data => {
-    console.log("Current units:", data.current_units);
-    console.log("Hourly units:", data.hourly_units);
-    console.log("Daily units:", data.daily_units);
-
-    return {
-      current: parseCurrentWeather(data),
-      daily: parseDailyWeather(data),
-      hourly: parseHourlyWeather(data),
-    }
-  }) */
 }
 
 function parseCurrentWeather({ current, daily }) {
@@ -189,9 +171,6 @@ function parseHourlyWeather({ hourly, current }) {
 }
 
 function renderWeather({ current, daily, hourly }) {
- /*  renderCurrentWeather(current);
-  renderDailyWeather(daily);
-  renderHourlyWeather(hourly); */
   if (document.querySelector("[data-current-icon]")) {
     renderCurrentWeather(current);
   }
@@ -275,7 +254,6 @@ if (document.querySelector('.current-time')) {
     hour: '2-digit',
     minute: '2-digit'
   });
-
 }
 
 /* WORLD CAPITALS WEATHER */
@@ -342,14 +320,12 @@ const cities = [{
   }
 ];
 
-
 function getCityWeather(lat, lon, timezone, city) {
    getWeather(
     lat,
     lon,
     timezone
   )
-  
   .then(({current}) => renderCityWeather(current, city))
   .catch(console.error);
 /*   .catch(e => {
@@ -370,14 +346,25 @@ function renderCityWeather(current, city) {
   document.body.classList.remove('blurred');
 }
 
-cities.forEach(city => {
+if (document.querySelector(".world-header")) {
+  cities.forEach(city => {
+    getCityWeather(
+      city.lat,
+      city.lon,
+      city.tz,
+      document.getElementById(city.id)
+    );
+  });
+}
+
+/* cities.forEach(city => {
   getCityWeather(
     city.lat,
     city.lon,
     city.tz,
     document.getElementById(city.id)
   );
-});
+}); */
 
 /* getCityWeather(
   40.73,
@@ -385,7 +372,6 @@ cities.forEach(city => {
   "America/New_York",
   document.getElementById("new-york")
 ); */
-
 
 /* SNOW */
 
@@ -452,17 +438,13 @@ if (season === "winter") startSnow();
 document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
 
 
+/* LIGHT/DARK MODE */
 
+const lightDarkModeBtn = document.querySelector('.light-dark-mode-btn'); 
 
+lightDarkModeBtn.addEventListener('click', () => {
+  console.log('hey');
+  const darkModeOn = lightDarkModeBtn.classList.toggle('lightDark');
+  document.documentElement.classList.toggle('dark-mode', darkModeOn);
+});
 
-/* .then(data => {
-  console.log(data)
-}) */
-
-/* getWeather(10, 10, Intl.DateTimeFormat().resolvedOptions().timeZone).then(res => res.json())
-  .then(data => {
-    console.log(data)
-}) */
-
-/* Phosphor */
-/* https://iconstack.io/ */

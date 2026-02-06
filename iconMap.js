@@ -1,5 +1,8 @@
 export const ICON_MAP = new Map()
 
+/* Phosphor icons */
+/* https://iconstack.io/ */
+
 /* ICON_MAP.set(0, "sun") */
 /* ICON_MAP.set(1, "sun") */
 addMapping([0, 1], "sun");
