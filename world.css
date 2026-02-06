@@ -26,7 +26,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.65);
+  background: var(--city-div);
   transition: opacity 300ms ease;
 }
 
@@ -38,7 +38,9 @@
   color: #fff;
   text-shadow: 0 2px 3px var(--clr-main);
 }
-
+.city-location-icon {
+  filter: var(--svg-icon-clr);
+}
 .city-div:hover .city-large,
 .city-div:hover .city-location-icon {
   filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%) drop-shadow(0 2px 3px rgb(23, 36, 77, 0.7));

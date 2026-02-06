@@ -7,7 +7,12 @@
 :root {
   --nav-bg: rgb(255, 255, 255, 0.8);
   --svg-icon-clr: invert(11%) sepia(12%) saturate(3587%) hue-rotate(189deg) brightness(100%) contrast(94%);
-  --day-card-bg: rgba(255, 255, 255, 0.5);
+  --day-card-bg: rgba(255, 255, 255, 0.5); 
+  --hour-row-odd: rgba(255, 255, 255, 0.3);
+  --hour-row-even: rgba(241, 241, 241, 0.4);
+
+  --city-div: rgba(255, 255, 255, 0.6);
+  
   --clr-bg: rgb(193, 192, 253);
   --clr-bg1: rgb(176, 172, 251);
   --clr-bg2: rgb(151, 156, 242);
@@ -22,6 +27,11 @@
   --nav-bg: rgba(75, 53, 77, 0.8);
   --svg-icon-clr: invert(82%) sepia(88%) saturate(1028%) hue-rotate(178deg) brightness(102%) contrast(98%);
   --day-card-bg: rgba(75, 53, 77, 0.6);
+  --hour-row-odd: rgba(75, 53, 77, 0.3);
+  --hour-row-even: rgba(55, 41, 56, 0.4);
+
+  --city-div: rgba(58, 37, 79, 0.6);
+
   --clr-bg: rgb(117, 117, 134);
   --clr-bg1: rgb(110, 107, 161);
   --clr-bg2: rgb(112, 116, 181);
@@ -43,6 +53,16 @@ body {
   background-attachment: fixed;
   /* backdrop-filter: blur(1px); */
 }
+
+/* body::before {
+    content: "";
+    background-image: linear-gradient(167deg, rgb(96, 81, 56), #361062);
+    background-size: cover; 
+    position: fixed;
+    inset: 0;
+    opacity: 0.4; 
+    z-index: -1;
+} */
 
 .blurred {
   filter: blur(3px);
@@ -69,6 +89,10 @@ nav a {
   justify-content: center;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3), inset 0 -3px 4.5px rgba(0, 0, 0, 0.3), inset 0 3px 4.5px rgba(255, 255, 255, 0.6);
   transition: all 100ms ease-in;
+}
+
+nav img {
+  filter: var(--svg-icon-clr);
 }
 
 nav a:hover {
@@ -128,6 +152,7 @@ nav img {
   display: block;
   object-fit: contain;
   margin-right: 3px;
+  filter: var(--svg-icon-clr);
 }
 
 .location {
@@ -233,13 +258,13 @@ nav img {
   border: 2px solid red;
 } */
 .hour-row {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--hour-row-odd);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .hour-row:nth-child(2n) {
-  background-color: rgba(241, 241, 241, 0.4);
+  background-color: var(--hour-row-even);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
 }
@@ -249,6 +274,14 @@ nav img {
   border-bottom: 1px solid var(--clr-border);
 }
 
-.light-dark-mode-btn .lightDark {
+.night-icon {
+  display: none;
+}
 
+.light-dark-mode-btn.lightDark .light-icon {
+  display: none;
+}
+
+.light-dark-mode-btn.lightDark .night-icon {
+  display: block;
 }

@@ -443,7 +443,6 @@ document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
 const lightDarkModeBtn = document.querySelector('.light-dark-mode-btn'); 
 
 lightDarkModeBtn.addEventListener('click', () => {
-  console.log('hey');
   const darkModeOn = lightDarkModeBtn.classList.toggle('lightDark');
   document.documentElement.classList.toggle('dark-mode', darkModeOn);
 });
