@@ -1,9 +1,14 @@
 .world-header {
+  border-radius: 6px;
+  margin-inline: auto;
+  max-width: var(--max-width);
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.2rem;
   border-radius: 6px;
   overflow: hidden;
+  background-color: transparent;
 }
 
 .city-div {
@@ -14,6 +19,7 @@
   text-align: center;
   padding: 1rem 0;
   border-radius: 6px;
+  box-shadow: var(--box-shadow);
 
   background-size: cover;
   background-position: center;
@@ -36,7 +42,8 @@
 
 .city-div:hover {
   color: #fff;
-  text-shadow: 0 2px 3px var(--clr-main);
+  text-shadow: 0 2px 3px rgb(47, 36, 67);
+  /* text-shadow: 0 2px 3px var(--clr-main); */
 }
 .city-location-icon {
   filter: var(--svg-icon-clr);

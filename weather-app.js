@@ -441,9 +441,23 @@ document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
 /* LIGHT/DARK MODE */
 
 const lightDarkModeBtn = document.querySelector('.light-dark-mode-btn'); 
+const savedMode = localStorage.getItem('savedMode');
+
+if (savedMode === 'dark') {
+  document.documentElement.classList.add('dark-mode');
+  lightDarkModeBtn.classList.add('lightDark');
+}
 
 lightDarkModeBtn.addEventListener('click', () => {
   const darkModeOn = lightDarkModeBtn.classList.toggle('lightDark');
   document.documentElement.classList.toggle('dark-mode', darkModeOn);
+  localStorage.setItem('savedMode', darkModeOn ? 'dark' : 'light');
 });
 
+if (!savedMode) {
+  const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (preferDark) {
+    document.documentElement.classList.add('dark-mode');
+    lightDarkModeBtn.classList.add('lightDark');
+  }
+}
