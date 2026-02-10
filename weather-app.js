@@ -7,6 +7,7 @@ import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/co
 
 import { ICON_MAP } from "./iconMap.js"
 
+
 /* HEADER LOCATION */
 
 async function reverseGeocode(lat, lon) {
@@ -67,11 +68,6 @@ function positionSuccess({ coords }) {
     coords.longitude,
     Intl.DateTimeFormat().resolvedOptions().timeZone
   )
-/*   getWeather(
-    59.97,
-    30.3,
-    "Europe/Moscow"
-  ) */
   .then(renderWeather)
   .catch(e => {
     console.error(e);
@@ -110,7 +106,6 @@ export function getWeather(lat, lon, timezone) {
   return fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
   .then (res => res.json())
   .then(data => {
-    // return data
     return {
       current: parseCurrentWeather(data),
       daily: parseDailyWeather(data),
@@ -128,7 +123,6 @@ function parseCurrentWeather({ current, daily }) {
 
   const {
     temperature_2m_max: [maxTemp], 
-    /* const maxTemp = daily.temperature_2m_max[0] */
     temperature_2m_min: [minTemp], 
     apparent_temperature_max: [maxFeelsLike], 
     apparent_temperature_min: [minFeelsLike], 
@@ -136,14 +130,14 @@ function parseCurrentWeather({ current, daily }) {
   } = daily
 
   return {
-    currentTemp: Math.round(currentTemp), /*  */
+    currentTemp: Math.round(currentTemp), 
     highTemp: Math.round(maxTemp),
     lowTemp: Math.round(minTemp), 
     highFeelsLike: Math.round(maxFeelsLike),
     lowFeelsLike: Math.round(minFeelsLike),
-    windSpeed: Math.round(windSpeed), /*  */
+    windSpeed: Math.round(windSpeed), 
     precip: Math.round(precip * 100) / 100,
-    iconCode,  /*  */
+    iconCode,
   }
 }
 
@@ -245,6 +239,7 @@ function renderHourlyWeather(hourly) {
   });
 }
 
+
 /* HEADER TIME */
 
 const currentTime = document.querySelector('.current-time');
@@ -255,6 +250,7 @@ if (document.querySelector('.current-time')) {
     minute: '2-digit'
   });
 }
+
 
 /* WORLD CAPITALS WEATHER */
 
@@ -357,21 +353,6 @@ if (document.querySelector(".world-header")) {
   });
 }
 
-/* cities.forEach(city => {
-  getCityWeather(
-    city.lat,
-    city.lon,
-    city.tz,
-    document.getElementById(city.id)
-  );
-}); */
-
-/* getCityWeather(
-  40.73,
-  -74.01,
-  "America/New_York",
-  document.getElementById("new-york")
-); */
 
 /* SNOW */
 
@@ -461,3 +442,33 @@ if (!savedMode) {
     lightDarkModeBtn.classList.add('lightDark');
   }
 }
+
+
+/* CHART */
+
+/* const chart = document.getElementById("chart"); */
+
+const xValues = [1,2,3,4,5,6,7];
+const yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+new Chart("chart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+      plugins: {
+        legend: { display: false }
+    },
+      scales: {
+        y: { min: 6, max: 16 }
+    }
+  }
+});

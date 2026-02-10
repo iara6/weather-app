@@ -6,9 +6,7 @@
   <link rel="stylesheet" href="weather-app.css">
   <!-- FAVICON-->
   <link href="icons/favicon.ico" rel="icon" type="image/x-icon">
-  <!-- FONT AWESOME -->
-<!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"> -->
-   <!-- GOOGLE FONTS -->
+   <!-- GOOGLE FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
@@ -126,6 +124,8 @@
       <div>32&deg;</div>
     </div>
   </section>
+
+  <canvas class="chart" id="chart"></canvas>
 
   <table class="hour-section">
     <tbody data-hour-section>
@@ -410,7 +410,6 @@
         </td>
       </tr>
     </tbody>
-
   </table>
 
   <template id="day-card-template">
@@ -422,42 +421,43 @@
   </template>
 
   <template id="hour-row-template">
-     <tr class="hour-row">
-        <td>
-          <div class="info-group">
-            <div data-day class="label"></div>
-            <div data-time></div>
-          </div>
-        </td>
-        <td>
-          <img data-icon class="weather-icon">
-        </td>
-        <td>
-          <div class="info-group">
-            <div class="label">Temp</div>
-            <div><span data-temp></span><span>&deg;</span></div>
-          </div>
-        </td>
-        <td>
-          <div class="info-group">
-            <div class="label">Fl Temp</div>
-            <div><span data-fl-temp></span><span>&deg;</span></div>
-          </div>
-        </td>
-        <td>
-          <div class="info-group">
-            <div class="label">Wind</div>
-            <div><span data-wind></span><span class="value-sub-info">km/h</span></div>
-          </div>
-        </td>
-        <td>          
-          <div class="info-group">
-            <div class="label">Precip</div>
-            <div><span data-precip></span><span class="value-sub-info">mm</span></div>
-          </div>
-        </td>
-      </tr>
+    <tr class="hour-row">
+      <td>
+        <div class="info-group">
+          <div data-day class="label"></div>
+          <div data-time></div>
+        </div>
+      </td>
+      <td>
+        <img data-icon class="weather-icon">
+      </td>
+      <td>
+        <div class="info-group">
+          <div class="label">Temp</div>
+          <div><span data-temp></span><span>&deg;</span></div>
+        </div>
+      </td>
+      <td>
+        <div class="info-group">
+          <div class="label">Fl Temp</div>
+          <div><span data-fl-temp></span><span>&deg;</span></div>
+        </div>
+      </td>
+      <td>
+        <div class="info-group">
+          <div class="label">Wind</div>
+          <div><span data-wind></span><span class="value-sub-info">km/h</span></div>
+        </div>
+      </td>
+      <td>          
+        <div class="info-group">
+          <div class="label">Precip</div>
+          <div><span data-precip></span><span class="value-sub-info">mm</span></div>
+        </div>
+      </td>
+    </tr>
   </template>
   <script type="module" src="weather-app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 </body>
 </html>

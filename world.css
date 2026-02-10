@@ -12,7 +12,6 @@
 }
 
 .city-div {
-  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +22,6 @@
 
   background-size: cover;
   background-position: center;
-  /* ******* */
   position: relative;
   overflow: hidden;
 }
@@ -43,11 +41,12 @@
 .city-div:hover {
   color: #fff;
   text-shadow: 0 2px 3px rgb(47, 36, 67);
-  /* text-shadow: 0 2px 3px var(--clr-main); */
 }
+
 .city-location-icon {
   filter: var(--svg-icon-clr);
 }
+
 .city-div:hover .city-large,
 .city-div:hover .city-location-icon {
   filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%) drop-shadow(0 2px 3px rgb(23, 36, 77, 0.7));
@@ -82,11 +81,8 @@
 }
 
 #new-york {
- /*  background-image: linear-gradient(rgba(255, 255, 255, 0.65)), url('bg/new-york.jpg'); */
  background-image: url('bg/new-york.jpg');
 }
-/* filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(304deg) brightness(109%) contrast(101%); */
-
 #buenos-aires {
   background-image: url('bg/buenos-aires.jpg');
 }
