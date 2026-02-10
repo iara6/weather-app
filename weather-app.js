@@ -424,6 +424,23 @@ document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
 const lightDarkModeBtn = document.querySelector('.light-dark-mode-btn'); 
 const savedMode = localStorage.getItem('savedMode');
 
+function getVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function updateChartTheme() {
+  chart.data.datasets.borderColor = getVar('--clr-main-lighter');
+
+  chart.options.scales.x.grid.color = getVar('--clr-border');
+/*   chart.options.scales.y.grid.color = getVar('--clr-border');
+
+  chart.options.scales.x.ticks.color = getVar('--clr-main');
+  chart.options.scales.y.ticks.color = getVar('--clr-main'); */
+
+  chart.update();
+}
+
+
 if (savedMode === 'dark') {
   document.documentElement.classList.add('dark-mode');
   lightDarkModeBtn.classList.add('lightDark');
@@ -433,6 +450,8 @@ lightDarkModeBtn.addEventListener('click', () => {
   const darkModeOn = lightDarkModeBtn.classList.toggle('lightDark');
   document.documentElement.classList.toggle('dark-mode', darkModeOn);
   localStorage.setItem('savedMode', darkModeOn ? 'dark' : 'light');
+
+   updateChartTheme();
 });
 
 if (!savedMode) {
@@ -442,6 +461,8 @@ if (!savedMode) {
     lightDarkModeBtn.classList.add('lightDark');
   }
 }
+
+
 
 
 /* CHART */
@@ -458,17 +479,41 @@ new Chart("chart", {
     datasets: [{
       fill: false,
       lineTension: 0,
-      backgroundColor: "rgba(0,0,255,1.0)",
-      borderColor: "rgba(0,0,255,0.1)",
-      data: yValues
+  /*     backgroundColor: "rgba(0,0,255,1.0)", */
+      data: yValues,
+
+         borderColor: getVar('--clr-main-lighter'), // Line color
+            borderWidth: 2,                   // Line width
+            /* borderDash: [5, 5],   */             // Dashed line
+            tension: 0.4  
     }]
   },
   options: {
       plugins: {
-        legend: { display: false }
-    },
+        legend: { display: false },
+      },
       scales: {
-        y: { min: 6, max: 16 }
+        x: { 
+          grid: {
+                    color: 'rgb(142, 141, 141, 0.5)' 
+                }
+         },
+        y: { min: 6, max: 16
+          , grid: {
+                    color: 'rgb(142, 141, 141, 0.5)' 
+                }
+         }
+      }
     }
-  }
-});
+  });
+
+  
+  /*  title: {
+       display: true,
+       text: 'Custom Chart Title',
+       color: '#ff6384', 
+       font: {
+         family: 'Geologica, sans-serif',
+         size: 16
+       }
+   } */
