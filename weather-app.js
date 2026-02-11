@@ -8,7 +8,9 @@ import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/co
 import { ICON_MAP } from "./iconMap.js"
 
 
+/*******************/
 /* HEADER LOCATION */
+/*******************/
 
 async function reverseGeocode(lat, lon) {
   const lang = "en"; // navigator.language || "en";
@@ -213,11 +215,13 @@ function renderDailyWeather(daily) {
   dailySection.innerHTML = "";
   daily.forEach(day => {
     const element = dayCardTemplate.content.cloneNode(true);
-    setValue("temp", day.maxTemp, { parent: element});
-    setValue("date", DAY_FORMATTER.format(day.timestamp), { parent: element});
+    setValue("temp", day.maxTemp, {parent: element});
+    setValue("date", DAY_FORMATTER.format(day.timestamp), {parent: element});
     element.querySelector("[data-icon]").src = getIconUrl(day.iconCode);
     dailySection.append(element);
   });
+
+  createDailyChart(daily);
 }
 
 const HOUR_FORMATTER = new Intl.DateTimeFormat("en", { hour: "numeric", minute: 'numeric' }); // hourCycle: 'h23'
@@ -240,7 +244,9 @@ function renderHourlyWeather(hourly) {
 }
 
 
+/***************/
 /* HEADER TIME */
+/***************/
 
 const currentTime = document.querySelector('.current-time');
 
@@ -252,7 +258,9 @@ if (document.querySelector('.current-time')) {
 }
 
 
+/**************************/
 /* WORLD CAPITALS WEATHER */
+/**************************/
 
 const cities = [{
     id: "new-york",
@@ -354,7 +362,9 @@ if (document.querySelector(".world-header")) {
 }
 
 
+/********/
 /* SNOW */
+/********/
 
 function startSnow() {
   const duration = 45 * 1000,
@@ -394,7 +404,10 @@ function startSnow() {
   })();
 }
 
+
+/****************************/
 /* DYNAMIC BACKGROUND IMAGE */
+/****************************/
 
 const seasonMonths = {
   0: "winter",
@@ -419,7 +432,9 @@ if (season === "winter") startSnow();
 document.body.style.backgroundImage = `url('bg/${season}.jpg')`;
 
 
+/*******************/
 /* LIGHT/DARK MODE */
+/*******************/
 
 const lightDarkModeBtn = document.querySelector('.light-dark-mode-btn'); 
 const savedMode = localStorage.getItem('savedMode');
@@ -429,13 +444,13 @@ function getVar(name) {
 }
 
 function updateChartTheme() {
-  chart.data.datasets.borderColor = getVar('--clr-main-lighter');
+  chart.data.datasets[0].borderColor = getVar('--clr-main-lighter');
 
   chart.options.scales.x.grid.color = getVar('--clr-border');
-/*   chart.options.scales.y.grid.color = getVar('--clr-border');
+  chart.options.scales.y.grid.color = getVar('--clr-border');
 
   chart.options.scales.x.ticks.color = getVar('--clr-main');
-  chart.options.scales.y.ticks.color = getVar('--clr-main'); */
+  chart.options.scales.y.ticks.color = getVar('--clr-main');
 
   chart.update();
 }
@@ -463,51 +478,109 @@ if (!savedMode) {
 }
 
 
-
-
+/*********/
 /* CHART */
+/*********/
 
-/* const chart = document.getElementById("chart"); */
+let chart = null;
 
-const xValues = [1,2,3,4,5,6,7];
-const yValues = [7,8,8,9,9,9,10,11,14,14,15];
+function getWeekdayLabels(daily) {
+  return daily.map(day => {
+    const weekday = DAY_FORMATTER.format(day.timestamp);
+    return weekday.charAt(0).toUpperCase() + weekday.slice(1); // capitalize
+  });
+}
 
-new Chart("chart", {
+function getDailyTemps(daily) {
+  return daily.map(day => day.maxTemp);
+}
+
+function createDailyChart(daily) {
+  const labels = getWeekdayLabels(daily);
+  const temps = getDailyTemps(daily);
+  console.log(temps);
+  
+
+  chart = new Chart(document.getElementById("chart"),{
   type: "line",
   data: {
-    labels: xValues,
+    labels: labels,
     datasets: [{
+      data: temps,
       fill: false,
       lineTension: 0,
-  /*     backgroundColor: "rgba(0,0,255,1.0)", */
-      data: yValues,
-
-         borderColor: getVar('--clr-main-lighter'), // Line color
-            borderWidth: 2,                   // Line width
-            /* borderDash: [5, 5],   */             // Dashed line
-            tension: 0.4  
+      borderWidth: 2,
+      borderColor: getVar('--clr-main-lighter'), 
+      tension: 1,
+      pointRadius: 4,
+      pointBackgroundColor: "orange",
+  /* pointBorderColor: "red"   */
     }]
   },
   options: {
-      plugins: {
-        legend: { display: false },
+    responsive: true,      
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: { 
+        grid: { color: getVar('--clr-border') },
+        ticks: { 
+          font: {
+            size: 15
+          },
+          color: getVar('--clr-main') }
       },
-      scales: {
-        x: { 
-          grid: {
-                    color: 'rgb(142, 141, 141, 0.5)' 
-                }
-         },
-        y: { min: 6, max: 16
-          , grid: {
-                    color: 'rgb(142, 141, 141, 0.5)' 
-                }
-         }
+      y: {  
+        /* min: -30,
+        max: 30, */
+        grid: { color: getVar('--clr-border') },
+        ticks: { color: getVar('--clr-main') }
+        }
       }
     }
   });
 
-  
+  updateChartTheme(); 
+}
+
+
+/* new Chart("chart", */ 
+/* const chart = new Chart(document.getElementById("chart"),{
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      data: yValues,
+      fill: false,
+      lineTension: 0,
+      borderWidth: 2,
+      borderColor: getVar('--clr-main-lighter'), 
+      tension: 0.4  
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: { 
+        grid: { color: getVar('--clr-border') },
+        ticks: { color: getVar('--clr-main') }
+      },
+      y: {  
+        min: 6,
+        max: 16,
+        grid: { color: getVar('--clr-border') },
+        ticks: { color: getVar('--clr-main') }
+        }
+      }
+    }
+  });
+
+  updateChartTheme();  */
+
   /*  title: {
        display: true,
        text: 'Custom Chart Title',
@@ -517,3 +590,5 @@ new Chart("chart", {
          size: 16
        }
    } */
+
+
